@@ -17,6 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from LavaJatoapp.views import login, register, index, perfil
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/', register , name ='register'),
+    path('', login , name ='login'),
+    path('index/', index , name ='index'),
+    path('perfil/', perfil , name ='perfil'),
 ]
