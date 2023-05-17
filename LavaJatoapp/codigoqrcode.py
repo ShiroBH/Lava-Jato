@@ -8,7 +8,7 @@ qr = qrcode.QRCode(
     border= 1
 )
 
-qrCPF = "variavel CPF"
+qrCPF = "variavel CPF recebido do formulario"
 
 imgQR = qrcode.make(qr)
 
