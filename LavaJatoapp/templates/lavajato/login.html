@@ -9,7 +9,7 @@
 <body>
     <!-- aqui e o formulario de login -->
     <!-- o "name" e o nome que vai para o banco de dados-->
-    <form action="{% url 'login'%}" method="POST">{% csrf_token %}
+    <form action="{% url 'login'%}"  method="POST">{% csrf_token %}
         <input type="number" placeholder="Digite seu CPF" name="cpf"><br>
         <input type="date" name="DataN"><br>
         <input type="submit" value="Login"><br>

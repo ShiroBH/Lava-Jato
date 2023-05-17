@@ -7,13 +7,13 @@ from django.contrib.auth.decorators import login_required
 from .models import Dados
 
 
-
 # Create your views here.
 def login(request):
     if request.method == "GET":     
         return render(request, 'lavajato/login.html')
     else:
-        username = request.POST.get('cpf')
+        
+        username = request.POST.get('cpf') 
         senha = request.POST.get('DataN')
 
         user = authenticate(username=username, password=senha)
@@ -23,6 +23,7 @@ def login(request):
             return redirect('index/')
         else:
             return HttpResponse('usuario não encontrado')
+        
 def register(request):
     # No formulario foi definido que ele teria o metodo post
     # aqui eu coloco um if se ele for get a pagina entra normal se nao ele faz o cadastro
@@ -49,7 +50,7 @@ def register(request):
         user = User.objects.create_user(username=username, password=DataN)
         user.save()
         dado = Dados.objects.create(cpf=username, email=email, DataN=DataN, nome=nome, cargo=cargo, foto=foto)
-        return redirect('index/')
+        return redirect('http://127.0.0.1:8000/index/')
     
 # tela principal apos ser autenticado ele sera mandado para ca
 @login_required(login_url='/')
@@ -57,7 +58,8 @@ def index(request):
     return render(request, 'pages/index.html')
 
 # Tela de dados - Aqui para baixo irei buscar os dados do django-admin e jogar na tela
+
 @login_required(login_url='/')
 def perfil(request):
-    dados = Dados.objects.all()#não consegui filtrar - o comando nao esta indo ".filter"
+    dados = Dados.objects.filter(cpf=str(request.user.username))
     return render(request, "pages/perfil.html", {"perfil":dados})
