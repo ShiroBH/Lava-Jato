@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Perfil do Usuario</h1>
+    <!-- puxa os dados do django-admin -->
+    <ul>
+        {% for c in perfil %}
+            <li>Nome: {{c.nome}}</li>
+            <li>CPF: {{c.cpf}}</li>
+            <li>Foto: {{c.foto}}</li>
+            <li>Data de Nacimento: {{c.DataN}}</li>
+            <li>Cargo: {{c.cargo}}</li>
+            <li>-----------------------------</li>
+        {% endfor%}
+    </ul>
+</body>
+</html>
