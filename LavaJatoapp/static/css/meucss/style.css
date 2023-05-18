@@ -1,0 +1,146 @@
+body {
+    background-color: rgb(201, 240, 255);
+    font-family: sans-serif;
+    text-align: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sua-carteirinha {
+    padding: 1%;
+}
+
+.clique-aqui {
+    text-align: center;
+    margin-top: 10%;
+}
+
+
+
+.scene {
+    margin-top: 10%;
+    margin-left: 35%;
+    align-items: center;
+    display: inline-block;
+    width: 400px;
+    height: 250px;
+    /*   border: 1px solid #CCC; */
+    margin: 40px 0;
+    perspective: 2000px;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 0.5s;
+    margin-top: 25%;
+}
+
+.card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: center;
+    font-size: 15px;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(173, 173, 173);
+    align-items: center;
+}
+
+
+.card.is-flipped {
+    transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card__face--front {
+    background-image: url(../../static/img/Cartão.png);
+    margin-block: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo_faders {
+    position: absolute;
+    height: 25px;
+    width: 75;
+    top: 12%;
+    left: 79%;
+}
+
+.descricao_lavajato {
+    position: absolute;
+    top: 13%;
+    left: 74%;
+}
+
+.p1 {
+    position: absolute;
+    top: 100%;
+    left: -2%;
+}
+
+
+
+.nome_usuario {
+    position: absolute;
+    top: 63%;
+    left: 5%;
+}
+
+.cpf {
+    position: absolute;
+    top: 72%;
+    left: 5%;
+}
+.cargo {
+    position: absolute;
+    top: 79%;
+    left: 5%;
+}
+
+.data_nascimento {
+    position: absolute;
+    top: 88%;
+    left: 5%;
+}
+
+
+
+.card__face--back {
+    background-image: linear-gradient(180deg, rgb(114, 202, 243), rgb(250, 250, 250));
+    transform: rotateY(180deg);
+    margin-block: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr_code {
+    position: absolute;
+    height: 80px;
+    top: 50%;
+    left: 5%;
+}

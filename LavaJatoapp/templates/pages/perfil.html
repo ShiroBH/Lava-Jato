@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/meucss/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -13,11 +14,77 @@
         {% for c in perfil %}
             <li>Nome: {{c.nome}}</li>
             <li>CPF: {{c.cpf}}</li>
-            <li>Foto: {{c.foto}}</li>
             <li>Data de Nacimento: {{c.DataN}}</li>
             <li>Cargo: {{c.cargo}}</li>
             <li>-----------------------------</li>
         {% endfor%}
     </ul>
+
+
+
+ <!-- Carteirinha -->
+
+ <h1 class="sua-carteirinha">CARTEIRA LAVA JATO</h1>
+    <main>
+        <div class="scene scene--card">
+            <div class="card">
+                <div  style="background-image: url(../../static/img/Cartão.png); background-size: contain;" class="card__face card__face--front">
+                    {% for c in perfil %}
+                    <div>
+                        <img src="{{c.foto.url}}"  height="114"
+                        width="108" alt="" 
+                        style="
+                        position: absolute;
+                        top: 10px;
+                        left: 7%;
+                        border-radius: 10%;">
+                    </div>
+                    <div class="dados_frente">
+                        <div class="descricao_lavajato">
+                            <p class="p1">CARTEIRA LAVA JATO</p>
+                        </div>
+                        <div class="nome_usuario" input type="text">Nome: {{c.nome}}</div>
+                        <div class="cpf">CPF: {{c.cpf}}</div>
+                        <div class="data_nascimento">Data de nascimento: {{c.DataN}}</div>
+                        <div class="cargo">Cargo: {{c.cargo}}</div>
+                      </div>
+                </div>
+                {% endfor%}
+                <div class="card__face card__face--back">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://curious-halva-771b6c.netlify.app/&size=50x50" alt="QR CODE" class="qr_code">
+                </div>
+            </div>
+        </div>
+    </main>
+{% for c in perfil %}
+    <form method="post" action="{% url 'generate_pdf'%}">
+    {% csrf_token %}
+    <br><br><br> <br><br>
+    <div style="display: none;">
+        <label for="my_variable">Lava JATO</label><br>
+        <label for="my_variable">nome:</label>
+        <input type="text" id="nome_pdf" name="nome_pdf" value="{{c.nome}}" ><br><br>
+        <label for="my_variable">Cargo:</label>
+        <input type="text" id="cargo_pdf" name="cargo_pdf" value="{{c.cargo}}"><br><br>
+        <label for="my_variable">CPF:</label>
+        <input type="text" id="cpf_pdf" name="cpf_pdf" value="{{c.cpf}}"><br><br>
+        <label for="my_variable">Data de nascimento:</label>
+        <input type="text" id="data_nascimento_pdf" name="data_nascimento_pdf" value="{{c.DataN}}"><br><br>
+    </div>
+        <input type="submit" value="Baixar PDF">
+    </form>
+{% endfor%}
 </body>
+
+ <p class="clique-aqui">Clique na carteirinha para visualizar o verso</p>
+    <script>
+        var cards = document.querySelectorAll('.card');
+
+        [...cards].forEach((card) => {
+            card.addEventListener('click', function () {
+                card.classList.toggle('is-flipped');
+            });
+        });
+    </script>
+
 </html>

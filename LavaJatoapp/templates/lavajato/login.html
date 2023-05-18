@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="../../static/css/meucss/globall.css">
 </head>
 <body>
     <!-- aqui e o formulario de login -->
     <!-- o "name" e o nome que vai para o banco de dados-->
     <form action="{% url 'login'%}"  method="POST">{% csrf_token %}
-        <input type="number" placeholder="Digite seu CPF" name="cpf"><br>
-        <input type="date" name="DataN"><br>
-        <input type="submit" value="Login"><br>
-        
+        <input class="texto" type="number" placeholder="Digite seu CPF" name="cpf"><br>
+        <input class="texto" type="date" name="DataN"><br>
+        <input class="button" type="submit" value="Login"><br> 
     </form>
 </body>
 <script src="../../static/js/login.js"></script>

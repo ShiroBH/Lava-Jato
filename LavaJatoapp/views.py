@@ -1,10 +1,17 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
 from .models import Dados
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from xhtml2pdf import pisa
+import io
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+
 
 
 # Create your views here.
@@ -63,3 +70,49 @@ def index(request):
 def perfil(request):
     dados = Dados.objects.filter(cpf=str(request.user.username))
     return render(request, "pages/perfil.html", {"perfil":dados})
+
+@login_required(login_url='/')
+def carteirinha(request):
+    dados = Dados.objects.filter(cpf=str(request.user.username))
+    return render(request, "pages/carteirinha.html", {"carteirinha":dados})
+
+@login_required(login_url='/')
+
+def generate_pdf(request):
+    if request.method == 'POST':
+        # Vai capturar o que foi digitado
+
+        my_list = request.POST.getlist('my_list')
+        nome_pdf = request.POST.get('nome_pdf')
+        cpf_pdf = request.POST.get('cpf_pdf')
+        data_nascimento_pdf = request.POST.get('data_nascimento_pdf')
+        cargo_pdf = request.POST.get('cargo_pdf')
+
+
+        buffer = io.BytesIO()
+
+        # Crie um objeto PDF, usando o buffer como o "arquivo"
+        doc = SimpleDocTemplate(buffer, pagesize=letter)
+
+        # Definir o conteúdo do PDF
+        styles = getSampleStyleSheet()
+        content = []
+        content.append(Paragraph(nome_pdf, styles['Heading1']))
+        content.append(Paragraph(cpf_pdf, styles['Normal']))
+        content.append(Paragraph(data_nascimento_pdf, styles['Normal']))
+        content.append(Paragraph(cargo_pdf, styles['Normal']))
+        for item in my_list:
+            content.append(Paragraph(my_list, styles['Normal']))
+
+        # Cria o PDF
+        doc.build(content)
+
+        # Obter o valor do buffer e gravar na resposta
+        pdf = buffer.getvalue()
+        buffer.close()
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=lava_jato.pdf'
+        return response
+    else:
+        # Render the form template
+        return render(request, 'my_form.html')
